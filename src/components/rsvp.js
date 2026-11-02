@@ -11,11 +11,15 @@ const maxExtras = (() => {
   return Number.isFinite(n) ? Math.min(Math.max(n, 0), 5) : 0;
 })();
 
+const MAX_MENORES = 8;
+
 class MnRsvp extends Section {
   static properties = {
     asiste: { state: true },
     status: { state: true },
     extras: { state: true },
+    conMenores: { state: true },
+    menores: { state: true },
     overlay: { state: true },
   };
 
@@ -24,6 +28,8 @@ class MnRsvp extends Section {
     this.asiste = '';
     this.status = 'idle'; // idle | sending | ok | error
     this.extras = []; // [{ nombre, restricciones }]
+    this.conMenores = ''; // '' | 'si' | 'no'
+    this.menores = []; // [{ nombre, edad, restricciones }]
     this.overlay = false;
     this.nombre = '';
     this.detail = '';
@@ -69,6 +75,21 @@ class MnRsvp extends Section {
     this.extras = this.extras.map((x, j) => (j === i ? { ...x, [key]: value } : x));
   }
 
+  setConMenores(v) {
+    this.conMenores = v;
+    // al decir que sí, ya se abre el primer renglón para completar
+    if (v === 'si' && this.menores.length === 0) this.addMenor();
+  }
+  addMenor() {
+    if (this.menores.length < MAX_MENORES) this.menores = [...this.menores, { nombre: '', edad: '', restricciones: '' }];
+  }
+  removeMenor(i) {
+    this.menores = this.menores.filter((_, j) => j !== i);
+  }
+  setMenor(i, key, value) {
+    this.menores = this.menores.map((x, j) => (j === i ? { ...x, [key]: value } : x));
+  }
+
   async submit(e) {
     e.preventDefault();
     if (!c.rsvp.endpoint) {
@@ -84,6 +105,7 @@ class MnRsvp extends Section {
       asiste: f.asiste,
       restricciones: viene ? f.restricciones || '' : '',
       acompanantes: viene ? this.extras.filter((x) => x.nombre.trim()) : [],
+      menores: viene && this.conMenores === 'si' ? this.menores.filter((x) => x.nombre.trim()) : [],
       website: f.website, // honeypot
     };
     this.status = 'sending';
@@ -140,6 +162,42 @@ class MnRsvp extends Section {
     `;
   }
 
+  renderMenores() {
+    if (this.asiste !== 'si') return '';
+    return html`
+      <fieldset class="choice">
+        <legend>¿Venís con algún menor de edad de entre 4 y 18 años?</legend>
+        <label><input type="radio" name="conMenores" value="si" required @change=${() => this.setConMenores('si')} /><span>Sí</span></label>
+        <label><input type="radio" name="conMenores" value="no" @change=${() => this.setConMenores('no')} /><span>No</span></label>
+      </fieldset>
+      ${this.conMenores === 'si'
+        ? html`
+            <div class="extras menores">
+              ${this.menores.map(
+                (x, i) => html`
+                  <div class="extra">
+                    <label>Menor ${i + 1}
+                      <input .value=${x.nombre} @input=${(e) => this.setMenor(i, 'nombre', e.target.value)} placeholder="Nombre y apellido" required />
+                    </label>
+                    <label>Edad
+                      <input type="number" inputmode="numeric" min="4" max="18" step="1" .value=${x.edad} @input=${(e) => this.setMenor(i, 'edad', e.target.value)} placeholder="Entre 4 y 18" required />
+                    </label>
+                    <label>Restricciones alimentarias
+                      <input .value=${x.restricciones} @input=${(e) => this.setMenor(i, 'restricciones', e.target.value)} placeholder="Opcional" />
+                    </label>
+                    ${this.menores.length > 1 ? html`<button type="button" class="link" @click=${() => this.removeMenor(i)}>Quitar</button>` : ''}
+                  </div>
+                `
+              )}
+              ${this.menores.length < MAX_MENORES
+                ? html`<button type="button" class="add" @click=${this.addMenor}>+ Sumar otro menor</button>`
+                : ''}
+            </div>
+          `
+        : ''}
+    `;
+  }
+
   render() {
     if (this.status === 'ok') {
       return html`<section id="rsvp">
@@ -160,7 +218,7 @@ class MnRsvp extends Section {
           <fieldset class="choice">
             <legend>¿Podés venir?</legend>
             <label><input type="radio" name="asiste" value="si" required @change=${() => (this.asiste = 'si')} /><span>Sí, ahí estaré</span></label>
-            <label><input type="radio" name="asiste" value="no" @change=${() => (this.asiste = 'no')} /><span>No puedo</span></label>
+            <label><input type="radio" name="asiste" value="no" @change=${() => { this.asiste = 'no'; this.conMenores = ''; this.menores = []; }} /><span>No puedo</span></label>
           </fieldset>
 
           ${this.asiste === 'si'
@@ -170,6 +228,8 @@ class MnRsvp extends Section {
             : ''}
 
           ${this.renderExtras()}
+
+          ${this.renderMenores()}
 
           <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
         </form>

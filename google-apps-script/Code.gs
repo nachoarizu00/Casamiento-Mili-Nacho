@@ -6,7 +6,7 @@ const SHEET_NAME = 'Confirmaciones';
 // Solo si el script NO se creó desde la planilla (Extensiones > Apps Script):
 // pegá acá el ID de la planilla (lo que va entre /d/ y /edit en su URL).
 const SPREADSHEET_ID = '';
-const HEADERS = ['Fecha', 'Nombre', 'Asiste', 'Restricciones alimentarias', 'Acompañantes', 'Restricciones acompañantes', 'Cantidad total'];
+const HEADERS = ['Fecha', 'Nombre', 'Asiste', 'Restricciones alimentarias', 'Acompañantes', 'Restricciones acompañantes', 'Cantidad total', 'Menores (4-18)', 'Restricciones menores', 'Cantidad menores'];
 
 function doPost(e) {
   const lock = LockService.getScriptLock();
@@ -22,6 +22,9 @@ function doPost(e) {
       sheet.appendRow(HEADERS);
       sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
       sheet.setFrozenRows(1);
+    } else if (sheet.getRange(1, HEADERS.length).getValue() === '') {
+      // planilla creada con una versión anterior del script: completa los encabezados nuevos
+      sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]).setFontWeight('bold');
     }
 
     const asiste = d.asiste === 'si';
@@ -34,6 +37,17 @@ function doPost(e) {
       .map(x => String(x.nombre).trim() + ': ' + String(x.restricciones).trim())
       .join('; ');
 
+    const menores = asiste && Array.isArray(d.menores)
+      ? d.menores.filter(x => x && String(x.nombre || '').trim()).slice(0, 8)
+      : [];
+    const menoresTxt = menores
+      .map(x => String(x.nombre).trim() + (String(x.edad || '').trim() ? ' (' + String(x.edad).trim() + ')' : ''))
+      .join(', ');
+    const restrMenores = menores
+      .filter(x => String(x.restricciones || '').trim())
+      .map(x => String(x.nombre).trim() + ': ' + String(x.restricciones).trim())
+      .join('; ');
+
     sheet.appendRow([
       new Date(),
       String(d.nombre).trim(),
@@ -41,7 +55,10 @@ function doPost(e) {
       asiste ? String(d.restricciones || '').trim() : '',
       nombres,
       restrExtras,
-      asiste ? 1 + extras.length : 0,
+      asiste ? 1 + extras.length + menores.length : 0,
+      menoresTxt,
+      restrMenores,
+      menores.length,
     ]);
     return json({ ok: true });
   } catch (err) {
@@ -74,6 +91,7 @@ function probar() {
   const r = doPost({ postData: { contents: JSON.stringify({
     nombre: 'PRUEBA Borrar', asiste: 'si', restricciones: 'ninguna',
     acompanantes: [{ nombre: 'Acompañante Prueba', restricciones: '' }],
+    menores: [{ nombre: 'Menor Prueba', edad: '9', restricciones: 'sin gluten' }],
   }) } });
   Logger.log(r.getContent());
 }

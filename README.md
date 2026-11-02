@@ -21,6 +21,10 @@ npm run build    # genera dist/
 
 Si cambiás el script, hay que hacer **Implementar → Administrar implementaciones → Editar → Nueva versión**; la URL se mantiene.
 
+## Menores de 4 a 18 años
+
+Cualquier invitado que confirma ve la pregunta "¿Venís con algún menor de edad de entre 4 y 18 años?". Si dice que sí, completa nombre, edad y restricciones de cada menor (hasta 8). En la planilla quedan en las columnas **Menores (4-18)**, **Restricciones menores** y **Cantidad menores**, y **Cantidad total** los incluye. Si cambiás `Code.gs`, hay que publicar una **Nueva versión** de la implementación.
+
 ## Invitados con +1
 
 El formulario no pide acompañantes por defecto. Para quien puede venir con alguien, mandale el link con `?mas=N`:
