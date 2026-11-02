@@ -1,7 +1,7 @@
 // Todo lo que cambia entre invitaciones vive acá. Editá solo este archivo.
 export const config = {
   couple: { a: 'Mili', b: 'Nacho' },
-  intro: 'Los invitamos a nuestro casamiento',
+  intro: 'Te queremos invitar a festejar con nosotros',
   dateISO: '2027-02-13T17:30:00-03:00',
   dateLabel: '13 · 02 · 2027',
 
@@ -31,8 +31,8 @@ export const config = {
       sign: 'Mili y Nacho',
     },
     no: {
-      title: 'Te vamos a extrañar {nombre}!!',
-      body: 'IGUAL SIEMPRE EN NUESTROS CORAZONES CRACK (Y PONÉ LA CROCANTE)',
+      title: '¡Te vamos a extrañar, {nombre}!',
+      body: 'Gracias por completar el formulario. Ya vamos a tener oportunidad para festejar en otro momento ;)',
     },
   },
 
