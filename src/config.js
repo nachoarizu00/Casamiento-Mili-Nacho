@@ -19,7 +19,7 @@ export const config = {
   ],
 
   rsvp: {
-    endpoint: '', // TODO: URL "/exec" del Apps Script (ver README.md)
+    endpoint: 'https://script.google.com/macros/s/AKfycbx_GP-rlgcKu45fal4CWhiM9UcyVKZL4Bak58Xmp6-zuHBL4LFVEs6SdFeYgC3ImJ771w/exec',
   },
 
   // Pantalla que se abre después de enviar la confirmación. {nombre} = nombre de pila.
