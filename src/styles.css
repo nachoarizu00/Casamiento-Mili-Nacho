@@ -1,0 +1,99 @@
+:root {
+  --bg: #f6f2ea;
+  --ink: #5a5d4a;        /* oliva grisáceo, como la referencia */
+  --ink-soft: #858870;
+  --line: rgba(90, 93, 74, 0.25);
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --script: 'Pinyon Script', cursive;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+main { max-width: 520px; margin: 0 auto; padding: 0 24px env(safe-area-inset-bottom); }
+section, footer { text-align: center; padding: 72px 0; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+
+.caps { text-transform: uppercase; letter-spacing: 0.28em; font-weight: 400; }
+.small { font-size: 0.78rem; letter-spacing: 0.3em; color: var(--ink-soft); }
+.script { font-family: var(--script); font-weight: 400; }
+.title { font-size: 0.95rem; letter-spacing: 0.35em; margin-bottom: 8px; }
+.note { font-style: italic; color: var(--ink-soft); max-width: 340px; }
+.eyebrow { font-style: italic; font-size: 1.15rem; color: var(--ink-soft); max-width: 260px; }
+
+/* Hero */
+.hero { min-height: 100svh; justify-content: center; gap: 18px; padding: 40px 0 96px; position: relative; }
+.hero-art { max-width: 520px; margin: 0 0 8px; }
+.names { font-size: clamp(3.4rem, 17vw, 5.2rem); line-height: 1.05; color: var(--ink); }
+.names span { font-size: 0.7em; opacity: 0.8; }
+.date { font-size: 1.4rem; letter-spacing: 0.32em; margin-top: 4px; }
+.scroll-hint { position: absolute; bottom: 36px; color: var(--ink-soft); animation: bob 2.4s ease-in-out infinite; }
+@keyframes bob { 50% { transform: translateY(6px); } }
+
+/* Ornamento */
+.sprig { width: 130px; color: var(--ink); }
+
+/* Ilustración: multiply funde el papel de la imagen con el fondo */
+.art { width: 100%; max-width: 460px; mix-blend-mode: multiply; margin: 8px 0;
+  -webkit-mask-image: radial-gradient(ellipse 60% 62% at 50% 50%, #000 78%, transparent 100%);
+  mask-image: radial-gradient(ellipse 60% 62% at 50% 50%, #000 78%, transparent 100%); }
+.venue { font-size: 1.15rem; margin-top: 4px; }
+
+/* Agenda */
+.agenda { list-style: none; width: 100%; max-width: 340px; display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
+.agenda li { display: grid; grid-template-columns: 76px 1px 1fr; align-items: center; text-align: left; gap: 18px; }
+.agenda li::after { content: none; }
+.agenda .time { text-align: right; letter-spacing: 0.15em; font-size: 1rem; grid-column: 1; }
+.agenda .what { grid-column: 3; text-transform: uppercase; letter-spacing: 0.22em; font-size: 0.85rem; position: relative; }
+.agenda li::before { content: ''; grid-column: 2; grid-row: 1; height: 28px; background: var(--line); }
+
+/* Botones circulares con ícono */
+.icon-link { display: inline-flex; flex-direction: column; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; margin-top: 4px; }
+.icon-link .circle { width: 62px; height: 62px; border: 1px solid var(--ink); border-radius: 50%; display: grid; place-items: center; transition: background 0.25s, color 0.25s; }
+.icon-link svg { width: 28px; height: 28px; }
+.icon-link:hover .circle, .icon-link:focus-visible .circle { background: var(--ink); color: var(--bg); }
+.icon-link .label { text-transform: uppercase; letter-spacing: 0.25em; font-size: 0.72rem; }
+
+/* Regalos */
+.accounts { display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 340px; margin-top: 4px; }
+.account { all: unset; box-sizing: border-box; cursor: pointer; display: flex; flex-direction: column; gap: 6px; align-items: center; padding: 20px 16px; border: 1px solid var(--line); transition: border-color 0.25s; }
+.account:hover, .account:focus-visible { border-color: var(--ink); }
+.alias { font-size: 1.25rem; letter-spacing: 0.08em; word-break: break-all; }
+.copy { display: inline-flex; gap: 6px; align-items: center; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--ink-soft); }
+
+/* Formulario RSVP */
+.rsvp-form { width: 100%; max-width: 360px; display: flex; flex-direction: column; gap: 22px; text-align: left; margin-top: 8px; }
+.rsvp-form label, .rsvp-form legend { display: flex; flex-direction: column; gap: 6px; text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.72rem; color: var(--ink-soft); }
+.rsvp-form input:not([type=radio]), .rsvp-form textarea { font: inherit; font-size: 1.1rem; letter-spacing: 0.02em; text-transform: none; color: var(--ink); background: transparent; border: 0; border-bottom: 1px solid var(--line); padding: 6px 0; border-radius: 0; resize: none; outline: none; }
+.rsvp-form input:focus, .rsvp-form textarea:focus { border-bottom-color: var(--ink); }
+.rsvp-form input::placeholder { color: var(--ink-soft); opacity: 0.5; font-style: italic; }
+.choice { border: 0; display: flex; flex-direction: row; gap: 10px; flex-wrap: wrap; }
+.choice legend { width: 100%; margin-bottom: 8px; }
+.choice label { flex: 1; }
+.choice input { position: absolute; opacity: 0; }
+.choice span { display: block; text-align: center; padding: 12px 8px; border: 1px solid var(--line); color: var(--ink); cursor: pointer; transition: all 0.25s; }
+.choice input:checked + span { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.choice input:focus-visible + span { outline: 1px solid var(--ink); outline-offset: 2px; }
+.submit { all: unset; cursor: pointer; align-self: center; text-transform: uppercase; letter-spacing: 0.3em; font-size: 0.8rem; padding: 14px 36px; border: 1px solid var(--ink); transition: all 0.25s; }
+.submit:hover, .submit:focus-visible { background: var(--ink); color: var(--bg); }
+.submit[disabled] { opacity: 0.5; cursor: default; }
+.hp { position: absolute; left: -9999px; }
+.error { color: #9a4a3a; font-style: italic; text-align: center; font-size: 0.95rem; }
+.thanks { font-size: 3rem; }
+
+footer { padding-bottom: 96px; }
+.sign { font-size: 2.2rem; }
+
+/* Aparición suave */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 1s ease, transform 1s ease; }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .scroll-hint { animation: none; }
+}
