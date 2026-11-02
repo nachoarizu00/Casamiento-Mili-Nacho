@@ -3,7 +3,7 @@
  * Se pega en Extensiones > Apps Script de la Google Sheet (ver README.md).
  */
 const SHEET_NAME = 'Confirmaciones';
-const HEADERS = ['Fecha', 'Nombre', 'Asiste', 'Acompañantes', 'Cantidad', 'Restricciones alimentarias', 'Mensaje'];
+const HEADERS = ['Fecha', 'Nombre', 'Asiste', 'Restricciones alimentarias', 'Acompañantes', 'Restricciones acompañantes', 'Cantidad total'];
 
 function doPost(e) {
   const lock = LockService.getScriptLock();
@@ -20,17 +20,25 @@ function doPost(e) {
       sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
       sheet.setFrozenRows(1);
     }
+
     const asiste = d.asiste === 'si';
-    const acomp = asiste ? String(d.acompanantes || '').trim() : '';
-    const cantidad = asiste ? 1 + (acomp ? acomp.split(/[,\n]/).filter(s => s.trim()).length : 0) : 0;
+    const extras = asiste && Array.isArray(d.acompanantes)
+      ? d.acompanantes.filter(x => x && String(x.nombre || '').trim()).slice(0, 5)
+      : [];
+    const nombres = extras.map(x => String(x.nombre).trim()).join(', ');
+    const restrExtras = extras
+      .filter(x => String(x.restricciones || '').trim())
+      .map(x => String(x.nombre).trim() + ': ' + String(x.restricciones).trim())
+      .join('; ');
+
     sheet.appendRow([
       new Date(),
       String(d.nombre).trim(),
       asiste ? 'Sí' : 'No',
-      acomp,
-      cantidad,
       asiste ? String(d.restricciones || '').trim() : '',
-      String(d.mensaje || '').trim(),
+      nombres,
+      restrExtras,
+      asiste ? 1 + extras.length : 0,
     ]);
     return json({ ok: true });
   } catch (err) {

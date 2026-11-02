@@ -7,8 +7,8 @@ class MnHero extends Section {
     return html`
       <section class="hero">
         <img class="art hero-art" src="/capilla.webp" alt="Ilustración de la capilla" fetchpriority="high" />
-        <p class="eyebrow">${c.intro}</p>
         <h1 class="names script">${c.couple.a} <span>y</span> ${c.couple.b}</h1>
+        <p class="eyebrow">${c.intro}</p>
         ${sprig}
         <p class="date caps">${c.dateLabel}</p>
         <p class="caps small">${c.venue.name}</p>

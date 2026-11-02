@@ -21,6 +21,14 @@ npm run build    # genera dist/
 
 Si cambiás el script, hay que hacer **Implementar → Administrar implementaciones → Editar → Nueva versión**; la URL se mantiene.
 
+## Invitados con +1
+
+El formulario no pide acompañantes por defecto. Para quien puede venir con alguien, mandale el link con `?mas=N`:
+
+- `https://tu-sitio.com/` → viene solo
+- `https://tu-sitio.com/?mas=1` → puede sumar 1 acompañante
+- `https://tu-sitio.com/?mas=3` → hasta 3 (máximo 5)
+
 ## Deploy
 
 Repo en GitHub → importar en Vercel (detecta Vite solo).

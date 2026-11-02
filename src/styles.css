@@ -97,3 +97,11 @@ footer { padding-bottom: 96px; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .scroll-hint { animation: none; }
 }
+
+/* Acompañantes (solo con ?mas=N) */
+.extras { display: flex; flex-direction: column; gap: 22px; }
+.extra { display: flex; flex-direction: column; gap: 16px; padding: 18px 0 4px; border-top: 1px solid var(--line); }
+button.add, button.link { all: unset; cursor: pointer; text-transform: uppercase; letter-spacing: 0.22em; font-size: 0.72rem; color: var(--ink); }
+button.add { align-self: center; padding: 12px 20px; border: 1px dashed var(--ink-soft); }
+button.add:hover, button.add:focus-visible { border-style: solid; }
+button.link { align-self: flex-end; color: var(--ink-soft); text-decoration: underline; text-underline-offset: 4px; }
