@@ -23,15 +23,15 @@ export const config = {
   },
 
   gifts: {
-    note: 'El mejor regalo es que puedan venir y estar con nosotros. Si además quisieran ayudarnos con nuestras próximas aventuras, como nuestra luna de miel, les compartimos nuestros datos 🙂',
+    note: 'El mejor regalo es que puedan venir y estar con nosotros.\nSi además quisieran ayudarnos con nuestras próximas aventuras, como nuestra luna de miel, les compartimos nuestros datos acá abajo',
     accounts: [
-      { label: 'Cuenta en pesos', alias: 'TODO.ALIAS.ARS' },
-      { label: 'Cuenta en dólares', alias: 'TODO.ALIAS.USD' },
+      { label: 'Cuenta en pesos', alias: 'NACHOYMILI.ARS' },
+      { label: 'Cuenta en dólares', alias: 'NACHOYMILI.USD' },
     ],
   },
 
   songs: {
     note: 'Ayudanos a armar la playlist de la noche.',
-    url: '', // TODO: link a playlist colaborativa de Spotify
+    url: 'https://open.spotify.com/playlist/6frb4yQTp98ypOtdxbRgne?si=8475da0f76e94ea2&pt=38cff7e9040ad9aa01c344ae154dccde',
   },
 };

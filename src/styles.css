@@ -23,7 +23,7 @@ section, footer { text-align: center; padding: 72px 0; display: flex; flex-direc
 .small { font-size: 0.78rem; letter-spacing: 0.3em; color: var(--ink-soft); }
 .script { font-family: var(--script); font-weight: 400; }
 .title { font-size: 0.95rem; letter-spacing: 0.35em; margin-bottom: 8px; }
-.note { font-style: italic; color: var(--ink-soft); max-width: 340px; }
+.note { font-style: italic; color: var(--ink-soft); max-width: 340px; white-space: pre-line; text-wrap: balance; }
 .eyebrow { font-style: italic; font-size: 1.15rem; color: var(--ink-soft); max-width: 260px; }
 
 /* Hero */
