@@ -3,6 +3,15 @@ import { Section, sprig } from './base.js';
 import { config as c } from '../config.js';
 
 class MnHero extends Section {
+  // La portada tiene su propia animación de apertura (no usa el fade genérico):
+  // espera a que la ilustración esté decodificada y recién ahí arranca.
+  firstUpdated() {
+    const img = this.querySelector('.hero-art');
+    const go = () => this.classList.add('ready');
+    (img?.decode ? img.decode() : Promise.resolve()).catch(() => {}).then(go);
+    setTimeout(go, 2500); // red de seguridad si la imagen tarda
+  }
+
   render() {
     return html`
       <section class="hero">

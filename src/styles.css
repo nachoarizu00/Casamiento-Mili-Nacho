@@ -92,7 +92,30 @@ footer { padding-bottom: 96px; }
 /* Aparición suave */
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity 1s ease, transform 1s ease; }
 .reveal.in { opacity: 1; transform: none; }
+
+/* ---- Apertura de la portada: la capilla se enfoca desde un desenfoque suave,
+        y después el texto va apareciendo en cascada ---- */
+mn-hero.reveal { opacity: 1; transform: none; transition: none; }
+.hero-art { opacity: 0; filter: blur(26px); transform: scale(1.06); }
+.hero > :is(.names, .eyebrow, .sprig, .date, .small) { opacity: 0; transform: translateY(10px); }
+.scroll-hint { opacity: 0; }
+mn-hero.ready .hero-art { animation: bloom 3.2s cubic-bezier(0.22, 0.7, 0.2, 1) forwards; }
+mn-hero.ready .hero > :is(.names, .eyebrow, .sprig, .date, .small) { animation: rise 1.3s ease var(--d, 0s) forwards; }
+.hero .names { --d: 1.7s; }
+.hero .eyebrow { --d: 2.3s; }
+.hero .sprig { --d: 2.7s; }
+.hero .date { --d: 3.1s; }
+.hero .small { --d: 3.4s; }
+mn-hero.ready .scroll-hint { opacity: 1; transition: opacity 1.2s ease 4.2s; }
+@keyframes bloom {
+  0%   { opacity: 0; filter: blur(26px); transform: scale(1.06); }
+  55%  { opacity: 1; }
+  100% { opacity: 1; filter: blur(0);    transform: none; }
+}
+@keyframes rise { to { opacity: 1; transform: none; } }
+
 @media (prefers-reduced-motion: reduce) {
+  .hero-art, .hero > :is(.names, .eyebrow, .sprig, .date, .small), .scroll-hint { opacity: 1 !important; filter: none !important; transform: none !important; animation: none !important; transition: none !important; }
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .scroll-hint { animation: none; }
