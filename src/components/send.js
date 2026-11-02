@@ -4,12 +4,16 @@ import { Section } from './base.js';
 // Botón "Enviar" al final de toda la página. Envía el formulario de #rsvp-form
 // (atributo form=""), así la gente ve regalos y canciones antes de confirmar.
 class MnSend extends Section {
-  static properties = { status: { state: true } };
+  static properties = { status: { state: true }, detail: { state: true } };
 
   constructor() {
     super();
     this.status = 'idle';
-    this._on = (e) => (this.status = e.detail);
+    this.detail = '';
+    this._on = (e) => {
+      this.status = e.detail.status;
+      this.detail = e.detail.detail;
+    };
   }
   connectedCallback() {
     super.connectedCallback();
@@ -27,7 +31,8 @@ class MnSend extends Section {
       <section class="send">
         <button class="submit" type="submit" form="rsvp-form" ?disabled=${sending}>${sending ? 'Enviando…' : 'Enviar'}</button>
         ${this.status === 'error'
-          ? html`<p class="error">No pudimos enviar tu respuesta. Probá de nuevo o escribinos por WhatsApp.</p>`
+          ? html`<p class="error">No pudimos enviar tu respuesta. Probá de nuevo o escribinos por WhatsApp.</p>
+              ${location.search.includes('debug') ? html`<p class="debug">${this.detail}</p>` : ''}`
           : ''}
       </section>
     `;

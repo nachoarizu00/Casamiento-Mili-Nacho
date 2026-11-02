@@ -26,11 +26,12 @@ class MnRsvp extends Section {
     this.extras = []; // [{ nombre, restricciones }]
     this.overlay = false;
     this.nombre = '';
+    this.detail = '';
   }
 
   updated(changed) {
     if (changed.has('status')) {
-      window.dispatchEvent(new CustomEvent('rsvp:status', { detail: this.status }));
+      window.dispatchEvent(new CustomEvent('rsvp:status', { detail: { status: this.status, detail: this.detail } }));
     }
     if (changed.has('overlay')) document.body.style.overflow = this.overlay ? 'hidden' : '';
   }
@@ -93,10 +94,22 @@ class MnRsvp extends Section {
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(payload),
       });
-      const out = await res.json();
-      this.status = out.ok ? 'ok' : 'error';
-      if (out.ok) this.overlay = true;
-    } catch {
+      const text = await res.text();
+      let out;
+      try {
+        out = JSON.parse(text);
+      } catch {
+        throw new Error(`Google no devolvió JSON (HTTP ${res.status}). Suele ser un problema de permisos del script. Inicio de la respuesta: ${text.replace(/\s+/g, ' ').slice(0, 140)}`);
+      }
+      if (!out.ok) throw new Error(`El script respondió con error: ${out.error || 'desconocido'}`);
+      this.detail = '';
+      this.status = 'ok';
+      this.overlay = true;
+    } catch (err) {
+      console.error('[RSVP]', err);
+      this.detail = err instanceof TypeError
+        ? 'No se pudo conectar con el script (red o CORS). ' + err.message
+        : String(err.message || err);
       this.status = 'error';
     }
   }

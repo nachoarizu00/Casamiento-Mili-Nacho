@@ -125,3 +125,5 @@ button.link { align-self: flex-end; color: var(--ink-soft); text-decoration: und
 .overlay-body { font-style: italic; color: var(--ink-soft); font-size: 1.15rem; text-wrap: balance; }
 .overlay .sign { font-size: 2.6rem; line-height: 1.1; }
 .overlay button.link { margin-top: 12px; align-self: center; }
+
+.debug { font: 12px/1.4 ui-monospace, monospace; color: var(--ink-soft); max-width: 340px; word-break: break-word; text-align: left; }
