@@ -105,3 +105,9 @@ button.add, button.link { all: unset; cursor: pointer; text-transform: uppercase
 button.add { align-self: center; padding: 12px 20px; border: 1px dashed var(--ink-soft); }
 button.add:hover, button.add:focus-visible { border-style: solid; }
 button.link { align-self: flex-end; color: var(--ink-soft); text-decoration: underline; text-underline-offset: 4px; }
+
+/* Luna de miel: dos ilustraciones lado a lado */
+.honeymoon { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; max-width: 440px; margin-top: 20px; }
+.honeymoon img { width: 100%; height: auto; display: block; mix-blend-mode: multiply;
+  -webkit-mask-image: radial-gradient(ellipse 62% 62% at 50% 50%, #000 76%, transparent 100%);
+  mask-image: radial-gradient(ellipse 62% 62% at 50% 50%, #000 76%, transparent 100%); }

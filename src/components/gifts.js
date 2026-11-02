@@ -32,6 +32,10 @@ class MnGifts extends Section {
             `
           )}
         </div>
+        <div class="honeymoon">
+          <img src="/luna-miel-1.webp" alt="Ilustración de Florencia al atardecer" loading="lazy" />
+          <img src="/luna-miel-2.webp" alt="Ilustración de montañas y un pueblo alpino" loading="lazy" />
+        </div>
       </section>
     `;
   }

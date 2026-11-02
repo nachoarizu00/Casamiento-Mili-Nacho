@@ -23,7 +23,7 @@ export const config = {
   },
 
   gifts: {
-    note: 'PONGAN LA TARASCA PUTOS',
+    note: 'El mejor regalo es que puedan venir y estar con nosotros. Si además quisieran ayudarnos con nuestras próximas aventuras, como nuestra luna de miel, les compartimos nuestros datos 🙂',
     accounts: [
       { label: 'Cuenta en pesos', alias: 'TODO.ALIAS.ARS' },
       { label: 'Cuenta en dólares', alias: 'TODO.ALIAS.USD' },
