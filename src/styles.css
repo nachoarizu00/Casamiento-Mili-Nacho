@@ -90,7 +90,7 @@ footer { padding-bottom: 96px; }
 /* Aparición suave */
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity 1s ease, transform 1s ease; }
 .reveal.in { opacity: 1; transform: none; }
-/* "Mili y Nacho" se escribe de izquierda a derecha (1.8 s): una máscara con borde suave que se desplaza */
+/* "Mili y Nacho" se escribe de izquierda a derecha (3.6 s): una máscara con borde suave que se desplaza */
 .names {
   padding: 0.08em 0.25em; /* que la tinta de las mayúsculas cursivas no quede recortada por la máscara */
   -webkit-mask-image: linear-gradient(90deg, #000 45%, transparent 55%);
@@ -101,7 +101,7 @@ footer { padding-bottom: 96px; }
   mask-repeat: no-repeat;
   -webkit-mask-position: 100% 0;
   mask-position: 100% 0;
-  animation: escribir 1.8s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+  animation: escribir 3.6s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
 }
 @keyframes escribir {
   from { -webkit-mask-position: 100% 0; mask-position: 100% 0; }
