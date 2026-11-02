@@ -16,6 +16,7 @@ class MnRsvp extends Section {
     asiste: { state: true },
     status: { state: true },
     extras: { state: true },
+    overlay: { state: true },
   };
 
   constructor() {
@@ -23,6 +24,38 @@ class MnRsvp extends Section {
     this.asiste = '';
     this.status = 'idle'; // idle | sending | ok | error
     this.extras = []; // [{ nombre, restricciones }]
+    this.overlay = false;
+    this.nombre = '';
+  }
+
+  updated(changed) {
+    if (changed.has('status')) {
+      window.dispatchEvent(new CustomEvent('rsvp:status', { detail: this.status }));
+    }
+    if (changed.has('overlay')) document.body.style.overflow = this.overlay ? 'hidden' : '';
+  }
+
+  get nombrePila() {
+    const n = (this.nombre || '').trim().split(/\s+/)[0] || '';
+    return n.charAt(0).toUpperCase() + n.slice(1);
+  }
+
+  renderOverlay() {
+    const t = c.thanks[this.asiste === 'si' ? 'yes' : 'no'];
+    const fill = (str) => str.replace('{nombre}', this.nombrePila);
+    return html`
+      <div class="overlay" role="dialog" aria-modal="true">
+        <div class="overlay-inner">
+          ${this.asiste === 'si'
+            ? html`<img class="overlay-img" src=${c.thanks.image} alt="" @error=${(e) => e.target.remove()} />`
+            : ''}
+          <h2 class="overlay-title">${fill(t.title)}</h2>
+          <p class="overlay-body">${t.body}</p>
+          ${t.sign ? html`<p class="script sign">${t.sign}</p>` : ''}
+          <button type="button" class="link" @click=${() => (this.overlay = false)}>Volver a la invitación</button>
+        </div>
+      </div>
+    `;
   }
 
   addExtra() {
@@ -43,6 +76,7 @@ class MnRsvp extends Section {
       return;
     }
     const f = Object.fromEntries(new FormData(e.target));
+    this.nombre = f.nombre;
     const viene = this.asiste === 'si';
     const payload = {
       nombre: f.nombre,
@@ -61,6 +95,7 @@ class MnRsvp extends Section {
       });
       const out = await res.json();
       this.status = out.ok ? 'ok' : 'error';
+      if (out.ok) this.overlay = true;
     } catch {
       this.status = 'error';
     }
@@ -97,14 +132,14 @@ class MnRsvp extends Section {
       return html`<section id="rsvp">
         <h2 class="caps title">Confirmar asistencia</h2>
         <p class="script thanks">¡Gracias!</p>
-        <p class="note">${this.asiste === 'si' ? 'Recibimos tu confirmación. ¡Nos vemos pronto!' : 'Lamentamos que no puedas venir. Gracias por avisarnos.'}</p>
+        <p class="note">${this.asiste === 'si' ? 'Recibimos tu confirmación.' : 'Recibimos tu respuesta.'}</p>
+        ${this.overlay ? this.renderOverlay() : ''}
       </section>`;
     }
-    const sending = this.status === 'sending';
     return html`
       <section id="rsvp">
         <h2 class="caps title">Confirmar asistencia</h2>
-        <form class="rsvp-form" @submit=${this.submit}>
+        <form id="rsvp-form" class="rsvp-form" @submit=${this.submit}>
           <label>Nombre y apellido
             <input name="nombre" required autocomplete="name" />
           </label>
@@ -124,11 +159,6 @@ class MnRsvp extends Section {
           ${this.renderExtras()}
 
           <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
-
-          <button class="submit" type="submit" ?disabled=${sending}>${sending ? 'Enviando…' : 'Enviar'}</button>
-          ${this.status === 'error'
-            ? html`<p class="error">No pudimos enviar tu respuesta. Probá de nuevo o escribinos por WhatsApp.</p>`
-            : ''}
         </form>
       </section>
     `;

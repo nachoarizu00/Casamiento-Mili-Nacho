@@ -111,3 +111,15 @@ button.link { align-self: flex-end; color: var(--ink-soft); text-decoration: und
 .honeymoon img { width: 100%; height: auto; display: block; mix-blend-mode: multiply;
   -webkit-mask-image: radial-gradient(ellipse 62% 62% at 50% 50%, #000 76%, transparent 100%);
   mask-image: radial-gradient(ellipse 62% 62% at 50% 50%, #000 76%, transparent 100%); }
+
+.send { padding: 24px 0 8px; }
+
+/* Segunda pantalla después de enviar */
+.overlay { position: fixed; inset: 0; z-index: 100; background: var(--bg); overflow-y: auto; animation: fade 0.6s ease; }
+@keyframes fade { from { opacity: 0; } }
+.overlay-inner { min-height: 100%; max-width: 520px; margin: 0 auto; padding: 40px 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; text-align: center; }
+.overlay-img { width: 100%; max-width: 360px; max-height: 50svh; object-fit: cover; }
+.overlay-title { font-family: var(--serif); font-weight: 400; font-size: clamp(1.7rem, 7vw, 2.3rem); line-height: 1.2; text-wrap: balance; }
+.overlay-body { font-style: italic; color: var(--ink-soft); font-size: 1.15rem; text-wrap: balance; }
+.overlay .sign { font-size: 2.6rem; line-height: 1.1; }
+.overlay button.link { margin-top: 12px; align-self: center; }

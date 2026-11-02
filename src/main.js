@@ -10,4 +10,5 @@ import './components/agenda.js';
 import './components/rsvp.js';
 import './components/gifts.js';
 import './components/songs.js';
+import './components/send.js';
 import './components/footer.js';

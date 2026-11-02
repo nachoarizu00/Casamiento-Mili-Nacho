@@ -22,6 +22,20 @@ export const config = {
     endpoint: '', // TODO: URL "/exec" del Apps Script (ver README.md)
   },
 
+  // Pantalla que se abre después de enviar la confirmación. {nombre} = nombre de pila.
+  thanks: {
+    image: '/confirmado.webp', // TODO: subir la foto a /public con este nombre
+    yes: {
+      title: '¡Qué bueno que venís, {nombre}!',
+      body: 'Te esperamos el 13 de febrero en Santa Lucía :)',
+      sign: 'Mili y Nacho',
+    },
+    no: {
+      title: 'Te vamos a extrañar {nombre}!!',
+      body: 'IGUAL SIEMPRE EN NUESTROS CORAZONES CRACK (Y PONÉ LA CROCANTE)',
+    },
+  },
+
   gifts: {
     note: 'El mejor regalo es que puedan venir y estar con nosotros.\nSi además quisieran ayudarnos con nuestras próximas aventuras, como nuestra luna de miel, les compartimos nuestros datos acá abajo',
     accounts: [
@@ -31,7 +45,7 @@ export const config = {
   },
 
   songs: {
-    note: 'Ayudanos a armar la playlist de la noche.',
+    note: 'Contamos con vos para armar la playlist de la noche.\nSumá una canción acá.\nTodo vale. Bueno, casi todo.',
     url: 'https://open.spotify.com/playlist/6frb4yQTp98ypOtdxbRgne?si=8475da0f76e94ea2&pt=38cff7e9040ad9aa01c344ae154dccde',
   },
 };
