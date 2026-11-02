@@ -39,9 +39,7 @@ section, footer { text-align: center; padding: 72px 0; display: flex; flex-direc
 .sprig { width: 130px; color: var(--ink); }
 
 /* Ilustración: multiply funde el papel de la imagen con el fondo */
-.art { width: 100%; max-width: 460px; mix-blend-mode: multiply; margin: 8px 0;
-  -webkit-mask-image: radial-gradient(ellipse 60% 62% at 50% 50%, #000 78%, transparent 100%);
-  mask-image: radial-gradient(ellipse 60% 62% at 50% 50%, #000 78%, transparent 100%); }
+.art { width: 100%; max-width: 460px; margin: 8px 0; }
 .venue { font-size: 1.15rem; margin-top: 4px; }
 
 /* Agenda */
