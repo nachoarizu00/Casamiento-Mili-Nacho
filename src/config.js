@@ -1,7 +1,7 @@
 // Todo lo que cambia entre invitaciones vive acá. Editá solo este archivo.
 export const config = {
   couple: { a: 'Mili', b: 'Nacho' },
-  intro: 'Te queremos invitar a festejar con nosotros',
+  intro: '¡Te queremos invitar a festejar con nosotros!',
   dateISO: '2027-02-13T17:30:00-03:00',
   dateLabel: '13 · 02 · 2027',
 
