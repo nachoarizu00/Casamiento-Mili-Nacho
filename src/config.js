@@ -46,6 +46,6 @@ export const config = {
 
   songs: {
     note: 'Contamos con vos para armar la playlist de la noche.\nSumá una canción acá.\nTodo vale. Bueno, casi todo.',
-    url: 'https://open.spotify.com/playlist/6frb4yQTp98ypOtdxbRgne?si=8475da0f76e94ea2&pt=38cff7e9040ad9aa01c344ae154dccde',
+    url: 'https://open.spotify.com/playlist/6frb4yQTp98ypOtdxbRgne?si=oLwc2OToTbaHrd_W0aK8zQ&utm_source=copy-link&pi=gisF-SRsTWOrG&pt=51a01106b122c3ea9fad6ee7265e85d3',
   },
 };
